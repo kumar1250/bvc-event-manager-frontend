@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------
+   Design tokens — "campus events lab": confident violet accent, warm
+   off-white / deep charcoal-navy bases, Space Grotesk for display type,
+   Inter for body. See PLATFORM notes for rationale.
+   ------------------------------------------------------------------ */
+@theme {
+  --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+
+  --color-base-50: #FAFAF7;
+  --color-base-100: #F2F1EB;
+  --color-base-200: #E4E1DA;
+  --color-base-300: #CFCBC0;
+  --color-base-600: #6B6960;
+  --color-base-800: #2B2A26;
+  --color-base-900: #15171C;
+  --color-base-950: #0D0E11;
+
+  --color-accent-400: #8C74FF;
+  --color-accent-500: #6D4AFF;
+  --color-accent-600: #5936E0;
+  --color-accent-glow: #B4A3FF;
+
+  --color-success-500: #1FA97A;
+  --color-warning-500: #E0A324;
+  --color-danger-500: #E5484D;
+
+  --radius-card: 1.25rem;
+  --radius-pill: 999px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-base-50);
+  color: var(--color-base-900);
+  -webkit-font-smoothing: antialiased;
+}
+
+.dark body {
+  background-color: var(--color-base-950);
+  color: var(--color-base-100);
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+::selection {
+  background-color: var(--color-accent-400);
+  color: white;
+}
+
+/* Focus ring visible everywhere, never suppressed */
+:focus-visible {
+  outline: 2px solid var(--color-accent-500);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Scrollbar - subtle, not default chrome grey */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--color-base-300);
+  border-radius: 999px;
+  border: 2px solid var(--color-base-50);
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: var(--color-base-800);
+  border: 2px solid var(--color-base-950);
+}
+
+/* ---------------------------------------------------------------------
+   Overlay / popover / sheet animations. Hand-rolled instead of relying on
+   a tailwindcss-animate plugin (not yet stable for Tailwind v4).
+   ------------------------------------------------------------------ */
+@keyframes fade-in { from { opacity: 0 } to { opacity: 1 } }
+@keyframes fade-out { from { opacity: 1 } to { opacity: 0 } }
+@keyframes pop-in { from { opacity: 0; transform: scale(0.96) translateY(2px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+@keyframes pop-out { from { opacity: 1; transform: scale(1) translateY(0); } to { opacity: 0; transform: scale(0.96) translateY(2px); } }
+@keyframes sheet-in { from { transform: translateY(100%); } to { transform: translateY(0); } }
+@keyframes sheet-out { from { transform: translateY(0); } to { transform: translateY(100%); } }
+
+.animate-fade-in { animation: fade-in 180ms ease-out both; }
+.animate-fade-out { animation: fade-out 150ms ease-in both; }
+.animate-pop-in { animation: pop-in 180ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-pop-out { animation: pop-out 120ms ease-in both; }
+.animate-sheet-in { animation: sheet-in 260ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-sheet-out { animation: sheet-out 200ms ease-in both; }
+
+@keyframes slide-in-left { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+.animate-slide-in-left { animation: slide-in-left 220ms cubic-bezier(0.16, 1, 0.3, 1) both; }

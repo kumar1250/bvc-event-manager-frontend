@@ -5,7 +5,7 @@ import axios, { AxiosError, type InternalAxiosRequestConfig } from "axios"
 // Falls back to the old singular VITE_API_BASE_URL, then localhost, so
 // nothing breaks if only one server is configured.
 const RAW_URLS =
-  import.meta.env.VITE_API_BASE_URLS || import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api/v2"
+  import.meta.env.VITE_API_BASE_URLS || import.meta.env.API_BASE_URL || "http://localhost:8000/api/v2"
 
 const SERVERS = RAW_URLS.split(",")
   .map((u: string) => u.trim().replace(/\/+$/, ""))

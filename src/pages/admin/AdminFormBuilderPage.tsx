@@ -48,7 +48,7 @@ function SortableFieldRow({ field, onEdit, onDuplicate, onDelete }: {
       <meta.icon className="h-4 w-4 text-accent-500 shrink-0" />
       <div className="min-w-0 flex-1">
         <p className="text-sm font-medium truncate">{field.label || "Untitled field"}</p>
-        <p className="text-xs text-base-600 dark:text-base-300/60">{meta.label}{field.required && " · Required"}{field.depends_on_field && " · Conditional"}</p>
+        <p className="text-xs text-base-600 dark:text-base-300/60">{meta.label}{field.required && " · Required"}{field.unique && " · Unique"}{field.depends_on_field && " · Conditional"}</p>
       </div>
       <Button variant="ghost" size="icon" onClick={onEdit}><Pencil className="h-3.5 w-3.5" /></Button>
       <DropdownMenu>
@@ -94,6 +94,7 @@ export default function AdminFormBuilderPage() {
       label: meta.label,
       field_type: type,
       required: false,
+      unique: false,
       order: fields.length,
       options: ["radio", "checkbox", "dropdown", "multiselect"].includes(type)
         ? [{ label: "Option 1", value: "Option 1", order: 0 }]

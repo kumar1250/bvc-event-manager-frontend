@@ -6,7 +6,7 @@ import { Input, Textarea, Label, HelpText } from "@/components/ui/input"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
-import { OPTION_TYPES } from "@/features/forms/fieldTypeMeta"
+import { OPTION_TYPES, NON_INPUT_TYPES } from "@/features/forms/fieldTypeMeta"
 
 export function FieldEditorDialog({
   field,
@@ -28,6 +28,9 @@ export function FieldEditorDialog({
   if (!draft) return null
 
   const hasOptions = OPTION_TYPES.includes(draft.field_type)
+  // Uniqueness only makes sense for a single stored value, not layout
+  // elements or multi-value fields (checkbox groups, multiselect).
+  const canBeUnique = !NON_INPUT_TYPES.includes(draft.field_type) && !["checkbox", "multiselect", "terms"].includes(draft.field_type)
   const priorFields = allFields.filter((f) => f.id !== draft.id && f.order < draft.order && !["section", "heading", "description"].includes(f.field_type))
   const parentField = priorFields.find((f) => f.id === draft.depends_on_field)
 
@@ -80,6 +83,12 @@ export function FieldEditorDialog({
             <Checkbox checked={draft.required} onCheckedChange={(v) => update("required", !!v)} id="required" />
             <Label htmlFor="required">Required field</Label>
           </div>
+          {canBeUnique && (
+            <div className="flex items-center gap-2.5">
+              <Checkbox checked={draft.unique} onCheckedChange={(v) => update("unique", !!v)} id="unique" />
+              <Label htmlFor="unique">Unique (no two submissions can share this value)</Label>
+            </div>
+          )}
           <div>
             <Label>Default value</Label>
             <Input className="mt-1.5" value={draft.default_value || ""} onChange={(e) => update("default_value", e.target.value)} />

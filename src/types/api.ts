@@ -93,6 +93,7 @@ export interface FormField {
   placeholder?: string
   description?: string
   required: boolean
+  unique: boolean
   default_value?: string
   min_length?: number | null
   max_length?: number | null

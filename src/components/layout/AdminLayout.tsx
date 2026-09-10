@@ -61,8 +61,8 @@ export function AdminLayout({ role = "admin" as "admin" | "coordinator" }) {
       {/* Desktop sidebar */}
       <aside className="hidden lg:flex fixed inset-y-0 left-0 w-64 flex-col border-r border-base-200 dark:border-base-800 bg-white dark:bg-base-900/40">
         <Link to="/" className="flex items-center gap-2 px-5 h-16 font-display text-lg font-semibold border-b border-base-200 dark:border-base-800">
-          <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-accent-500 text-white">BVCE</span>
-          BVCE
+          <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-accent-500 text-white">F</span>
+          Fest {role === "admin" ? "Admin" : "Coordinator"}
         </Link>
         <nav className="flex-1 space-y-1 overflow-y-auto p-3">
           {items.map((item) => <SidebarLink key={item.to} {...item} />)}

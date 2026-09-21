@@ -9,8 +9,8 @@ export function AuthShell({ title, subtitle, children }: { title: string; subtit
           background: "radial-gradient(60% 50% at 20% 20%, rgba(140,116,255,0.5), transparent), radial-gradient(50% 40% at 90% 80%, rgba(109,74,255,0.35), transparent)"
         }} />
         <Link to="/" className="relative flex items-center gap-2 font-display text-lg font-semibold">
-          <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-accent-500">F</span>
-          Fest
+          <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-accent-500">B</span>
+          BVCE
         </Link>
         <div className="relative">
           <p className="font-display text-3xl font-semibold leading-tight max-w-sm">
@@ -26,7 +26,7 @@ export function AuthShell({ title, subtitle, children }: { title: string; subtit
         <div className="w-full max-w-sm">
           <Link to="/" className="lg:hidden flex items-center gap-2 font-display text-lg font-semibold mb-8">
             <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-accent-500 text-white">F</span>
-            Fest
+            BVCE
           </Link>
           <h1 className="font-display text-2xl font-semibold">{title}</h1>
           {subtitle && <p className="mt-1.5 text-sm text-base-600 dark:text-base-300/70">{subtitle}</p>}

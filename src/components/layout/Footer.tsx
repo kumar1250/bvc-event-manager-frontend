@@ -6,7 +6,7 @@ export function Footer() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6 py-10 flex flex-col sm:flex-row items-center justify-between gap-4">
         <Link to="/" className="flex items-center gap-2 font-display text-base font-semibold">
           <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-accent-500 text-white text-xs">F</span>
-          Fest
+          BVCE
         </Link>
         <p className="text-sm text-base-600 dark:text-base-300/60">Discover, register, and experience campus events.</p>
         <div className="flex gap-5 text-sm text-base-600 dark:text-base-300/60">

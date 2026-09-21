@@ -1,10 +1,12 @@
 import { useState } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
 import { ChevronDown, CheckCircle2, PartyPopper } from "lucide-react"
 import { toast } from "sonner"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Badge } from "@/components/ui/badge"
+import { useAuth } from "@/context/AuthContext"
 import { usePublicForm, useSubmitForm } from "@/lib/queries"
 import { DynamicFormRenderer, type AnswerMap } from "./DynamicFormRenderer"
 import { extractErrorMessage, extractFieldErrors } from "@/lib/apiClient"
@@ -23,8 +25,21 @@ export function ActivityRegistrationCard({ formSummary, registrationOpen, disabl
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [result, setResult] = useState<FormSubmissionDetail | null>(null)
 
+  const { isAuthenticated } = useAuth()
+  const navigate = useNavigate()
+  const location = useLocation()
+
   const { data: form, isLoading } = usePublicForm(expanded ? formSummary.id : undefined)
   const submitMutation = useSubmitForm(formSummary.id)
+
+  function openRegistration() {
+    if (!isAuthenticated) {
+      toast.info("Please log in to register.")
+      navigate("/login", { state: { from: location } })
+      return
+    }
+    setExpanded(true)
+  }
 
   async function handleSubmit(answers: AnswerMap) {
     setFieldErrors({})
@@ -43,7 +58,11 @@ export function ActivityRegistrationCard({ formSummary, registrationOpen, disabl
   return (
     <Card className="overflow-hidden">
       <button
-        onClick={() => !alreadyRegistered && setExpanded((v) => !v)}
+        onClick={() => {
+          if (alreadyRegistered) return
+          if (expanded) setExpanded(false)
+          else openRegistration()
+        }}
         className={cn(
           "flex w-full items-center justify-between gap-4 p-5 sm:p-6 text-left",
           !alreadyRegistered && "cursor-pointer hover:bg-base-50 dark:hover:bg-base-800/30 transition-colors"
@@ -108,7 +127,7 @@ export function ActivityRegistrationCard({ formSummary, registrationOpen, disabl
 
       {!expanded && !alreadyRegistered && !result && (
         <div className="px-5 sm:px-6 pb-5 -mt-1">
-          <Button size="sm" variant="outline" onClick={() => setExpanded(true)}>
+          <Button size="sm" variant="outline" onClick={openRegistration}>
             {registrationOpen ? "Register" : "View details"}
           </Button>
         </div>
